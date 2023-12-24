@@ -26,8 +26,8 @@ TimerHandle_t timer_level_measurement;
 #define Serial_US Serial1
 
 // Distancia a los lleno y vacío
-#define FULL_DISTANCE 150
-#define EMPTY_DISTANCE 2000
+#define FULL_DISTANCE 100
+#define EMPTY_DISTANCE 1950
 
 // Método que inicia la secuencia del Trigger para comenzar a medir
 void init_ultrasonic_sensor()
@@ -107,8 +107,8 @@ void level_measurement()
     // Envia los datos mediante lora
     sendDataLora((String)nivelDepHuerto + "=" + (String)nivel_agua);
 
-    DEBUG_PRINT("Altura columna agua: " + (String)distance + " cm");
-    write_log("Altura columna agua: " + (String)distance + " cm");
+    DEBUG_PRINT("Altura columna agua: " + (String)(EMPTY_DISTANCE - distance) + " cm");
+    write_log("Altura columna agua: " + (String)(EMPTY_DISTANCE - distance) + " cm");
 
     DEBUG_PRINT("Nivel agua: " + (String)nivel_agua + " %");
     write_log("Nivel agua: " + (String)nivel_agua + " %");
