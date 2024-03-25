@@ -7,6 +7,7 @@
 #include "server_functions.h"
 #include "lora_init.h"
 #include "level_measure.h"
+#include "sleep_config.h"
 #include "log.h"
 
 #include "debug_utils.h"
@@ -46,6 +47,11 @@ void setup()
   xTimerStart(timer_level_measurement, 0);
 
   write_log("Temporizador de medicion del nivel iniciado...");
+
+  // Inicializa el temporizador encargado de mandar al modo sleep al ESP32
+  Sleep_Timer = xTimerCreate("Sleep_timer", pdMS_TO_TICKS(TIME_INIT_SLEEP), pdFALSE, (void *)0, reinterpret_cast<TimerCallbackFunction_t>(sleep_init));
+
+  write_log("Temporizador modo sleep inicializado...");
 
   // Iniciamos la conexion wifi como cliente
   wifiConnectSTA();
